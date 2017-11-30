@@ -2,4 +2,4 @@
 
 ## Relevant links:
 
-[ThingsBoard](https://thingsboard.io/docs/samples/)
+[ThingsBoard](https://thingsboard.io)
