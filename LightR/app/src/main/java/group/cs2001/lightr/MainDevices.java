@@ -45,12 +45,10 @@ public class MainDevices extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        //Log.d("CDA", "onBackPressed Called");
+        Intent intent = new Intent(MainDevices.this, MainMenu.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     @Override
@@ -81,11 +79,21 @@ public class MainDevices extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_devices) {
-            startActivity(new Intent(MainDevices.this, MainDevices.class));
+            Intent intent = new Intent(MainDevices.this, MainDevices.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         } else if (id == R.id.nav_light) {
-            startActivity(new Intent(MainDevices.this, MainLight.class));
+            Intent intent = new Intent(MainDevices.this, MainLight.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         } else if (id == R.id.nav_temp) {
-            startActivity(new Intent(MainDevices.this, MainTemp.class));
+            Intent intent = new Intent(MainDevices.this, MainTemp.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        } else if (id == R.id.nav_settings) {
+            Intent intent = new Intent(MainDevices.this, MainSettings.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

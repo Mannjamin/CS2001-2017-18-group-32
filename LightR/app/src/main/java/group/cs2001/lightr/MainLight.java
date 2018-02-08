@@ -45,12 +45,10 @@ public class MainLight extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+        //Log.d("CDA", "onBackPressed Called");
+        Intent intent = new Intent(MainLight.this, MainMenu.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     @Override
@@ -81,11 +79,21 @@ public class MainLight extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_devices) {
-            startActivity(new Intent(MainLight.this, MainDevices.class));
+            Intent intent = new Intent(MainLight.this, MainDevices.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         } else if (id == R.id.nav_light) {
-            startActivity(new Intent(MainLight.this, MainLight.class));
+            Intent intent = new Intent(MainLight.this, MainLight.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         } else if (id == R.id.nav_temp) {
-            startActivity(new Intent(MainLight.this, MainTemp.class));
+            Intent intent = new Intent(MainLight.this, MainTemp.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        } else if (id == R.id.nav_settings) {
+            Intent intent = new Intent(MainLight.this, MainSettings.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

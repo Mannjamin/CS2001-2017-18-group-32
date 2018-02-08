@@ -21,16 +21,20 @@
         </activity>
         <activity
             android:name=".MainTemp"
-            android:label="@string/title_activity_main_temp"
+            android:label="Temperature"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainLight"
-            android:label="@string/title_activity_main_light"
+            android:label="Lighting"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainDevices"
-            android:label="@string/title_activity_main_devices"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:label="Devices"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainSettings"
+            android:label="Global Settings"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
