@@ -1,0 +1,25 @@
+Student-
+
+Students tend to be more experienced with technology so this one probably wouldn’t have much trouble using the app.
+This situation takes place during the winter (this is relevant as the days are shorter and it is colder outside which would affect the schedule for the lights and temperature).
+
+Time	  Activity
+8:00	  Temperature and/or lights turn on to wake Student up.
+8:10	  Once alarm is turned off the lights would dim to a normal brightness for the time of day.
+8:15	  Student checks schedule for the day so he knows what he’s doing that day and to make sure that the lights/temperature turn off and on at the right times .
+8:45	  Student showers, has breakfast and leaves for a lecture.
+9:00	  Lights and temperature turn off because of the schedule he set up based on his lectures/labs/seminars/activities for the day.
+10:00	  After the lecture he hangs out with his colleagues.
+11:00	  The lights and temperature turn back on while he’s out and he receives a notification telling him so.
+        Since he isn’t returning home anytime soon he taps the notification and turns off the lights/temperature.
+13:00	  Eventually he gets home and starts studying.
+        He adjusts the lights and temperature so he’s comfortable while he studies (the lights would normally adjust brightness based on the time of day and sunset/rise times).
+17:00	  It gets late and it starts to get dark outside so the lights start to brighten to compensate.
+        It also gets colder so the temperature begins to warm up.
+23:15	  The time that the student set up for lights out comes around and a notification appears on his phone telling him so about 15 minutes ahead of time.
+        He decides to stay up a bit later and delays this by 30 minutes.
+00:00	   He eventually goes to bed and the lights and temperature turn off.
+
+
+Potential Feature (I don’t think we would be able to do this based on our hardware but it would be cool if we could)- 
+A blue light filter to help keep a decent sleeping pattern could help a student a lot.
