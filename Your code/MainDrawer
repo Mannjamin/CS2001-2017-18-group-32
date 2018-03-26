@@ -16,3 +16,18 @@
         android:id="@+id/nav_slideshow"
         android:icon="@drawable/temp"
         android:title="Temperature" />
+
+ <item
+        android:id="@+id/nav_manage"
+        android:icon="@drawable/sound"
+        android:title="Sound" />
+
+
+    <item
+        android:id="@+id/nav_settings"
+        android:icon="@drawable/ic_menu_manage"
+        android:title="Settings"
+
+        />
+
+</menu>
