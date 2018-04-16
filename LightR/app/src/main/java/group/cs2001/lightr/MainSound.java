@@ -1,12 +1,9 @@
 package group.cs2001.lightr;
 
-import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,7 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class MainTemp extends AppCompatActivity
+public class MainSound extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
@@ -40,7 +37,7 @@ public class MainTemp extends AppCompatActivity
     @Override
     public void onBackPressed() {
         //Log.d("CDA", "onBackPressed Called");
-        Intent intent = new Intent(MainTemp.this, MainMenu.class);
+        Intent intent = new Intent(MainSound.this, MainMenu.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
@@ -73,23 +70,23 @@ public class MainTemp extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_devices) {
-            Intent intent = new Intent(MainTemp.this, MainDevices.class);
+            Intent intent = new Intent(MainSound.this, MainDevices.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else if (id == R.id.nav_light) {
-            Intent intent = new Intent(MainTemp.this, MainLight.class);
+            Intent intent = new Intent(MainSound.this, MainLight.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else if (id == R.id.nav_temp) {
-            Intent intent = new Intent(MainTemp.this, MainTemp.class);
+            Intent intent = new Intent(MainSound.this, MainTemp.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else if (id == R.id.nav_sound) {
-            Intent intent = new Intent(MainTemp.this, MainSound.class);
+            Intent intent = new Intent(MainSound.this, MainSound.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else if (id == R.id.nav_settings) {
-            Intent intent = new Intent(MainTemp.this, MainSettings.class);
+            Intent intent = new Intent(MainSound.this, MainSettings.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }

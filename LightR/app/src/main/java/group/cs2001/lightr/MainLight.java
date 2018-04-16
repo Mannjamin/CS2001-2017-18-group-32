@@ -81,6 +81,10 @@ public class MainLight extends AppCompatActivity
             Intent intent = new Intent(MainLight.this, MainTemp.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+        } else if (id == R.id.nav_sound) {
+            Intent intent = new Intent(MainLight.this, MainSound.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
         } else if (id == R.id.nav_settings) {
             Intent intent = new Intent(MainLight.this, MainSettings.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
