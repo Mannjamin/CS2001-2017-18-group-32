@@ -9,4 +9,14 @@
     <string name="title_activity_main_temp">MainTemp</string>
     <string name="title_activity_main_light">MainLight</string>
     <string name="title_activity_main_settings">MainSettings</string>
+
+    <string name="main_menu_current_temperature">Current Temperature</string>
+    <string name="main_menu_current_lighting">Current Lighting</string>
+    <string name="main_menu_current_sound">Current Sound</string>
+
+    <string name="main_help_button">\?</string>
+
+    <string name="temperature">22°C</string>
+
+    <string name="save_button">Save Changes</string>
 </resources>
