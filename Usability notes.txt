@@ -1,0 +1,55 @@
+Make sure you talk about every aspect of the app (back end, front end, design, ect.)
+
+explain how you planned and went about engineering your solution (star method)
+protype tools (pen and paper (simple and easy), POP(reccomended in lecture), website, android studio(basic views))
+Multiple iterations
+Maybe changes based on feedback
+Maybe indursty feedback about userbase
+Limitations: 
+After the website version not many changes were made
+Refrences (look at lectures)
+(Maybe refrence to reviews)
+Talk about gannt chart and how differrent reality was
+
+
+Question, peronsa, analysis
+
+Analysis: similar apps,  take insparation
+Question: Public opinion, feedback
+Flowchart: Looked at technical aspects o the app and got requirments(idea for system alarm)
+Personas: Couldn't get access to a wide variety of people, gave us a better idea of the users needs
+ 
+Refrence group report
+
+
+
+link back specific design bits to usabilty engineering principles
+Note that as this section assesses your application of usability 
+engineering principles, you will need to describe which principles you have applied, and show how they have driven your interaction design, using references where necessary to support these. 
+topics relating to cognition, perception (eg. affordances, depth cues), attention, memory, and other design-relevant guidance (feedback, visibility, etc). 
+include time selection for schedule (lots to talk about)
+
+Talk about in what ways our designs are good/bad why theyre good/bad 
+what we couldve improved
+what we wouldve done had we had the time
+Critical friend (Stasha)
+	We got the idea to provide conctrete feedback for when something happens
+	Make more of an effort on the colour schemes(look at android material website for refrence) contrasting colours
+	WE could've had a colour blind option	
+Potential User evaluations
+
+System status- 	Save changes
+		Connected
+		
+Real world match- Digital alarm clock
+
+user control- 	Save to make changes
+
+Consistency- 	Help button always in the same place
+		Apply, or save changes or whatever. But be consistent.
+
+Error prevention- Save changes
+
+Recognition- Symbols along with words
+
+maybe we couldve inculded a technical mode for industry/techincal people
