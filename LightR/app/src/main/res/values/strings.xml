@@ -9,4 +9,5 @@
     <string name="title_activity_main_temp">MainTemp</string>
     <string name="title_activity_main_light">MainLight</string>
     <string name="title_activity_main_settings">MainSettings</string>
+    <string name="title_activity_main_light_settings">MainLightSettings</string>
 </resources>

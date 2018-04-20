@@ -39,6 +39,10 @@
             android:name=".MainSettings"
             android:label="Global Settings"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainLightSettings"
+            android:label="Light Settings"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
