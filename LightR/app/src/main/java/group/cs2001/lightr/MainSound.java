@@ -14,14 +14,14 @@ import android.widget.TextView;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import java.sql.*;
+import java.util.*;
 
 import static group.cs2001.lightr.R.*;
 
-public class MainSound extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
-{
+public class MainSound extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(layout.activity_main_sound);
         Toolbar toolbar = findViewById(id.toolbar);
@@ -40,34 +40,52 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
         graph.getGridLabelRenderer().setHorizontalAxisTitle("Time (hrs)");
         graph.getGridLabelRenderer().setVerticalAxisTitle("Sound (dB)");
 
-        DataPoint[] points = new DataPoint[100];
-        for (int i = 0; i < points.length; i++)
-        {
-            points[i] = new DataPoint(i, (100 - i));
-        }
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
-
-        // set manual X bounds
-        graph.getViewport().setYAxisBoundsManual(true);
-        graph.getViewport().setMinY(0);
-        graph.getViewport().setMaxY(105);
-
-        graph.getViewport().setXAxisBoundsManual(true);
-        graph.getViewport().setMinX(0);
-        graph.getViewport().setMaxX(105);
-
         // enable scaling and scrolling
         graph.getViewport().setScalable(true);
         graph.getViewport().setScalableY(true);
 
+        LineGraphSeries<DataPoint> series = GetSeries();
         graph.addSeries(series);
+    }
 
-        updateTextView(Double.toString(series.getHighestValueY()));
+
+    public LineGraphSeries<DataPoint> GetSeries() {
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
+        try {
+            ResultSet rs;
+
+            Class.forName("com.mysql.jdbc.Driver");
+
+            String url = "jdbc:mysql://82.39.20.185:3306/lightr";
+
+            Connection con = DriverManager.getConnection( url,"USERNAME","PASSWORD");
+            Statement select = con.createStatement();
+
+            // Execute a query
+
+            rs = select.executeQuery("SELECT timestamp, sound FROM lightr");
+
+            System.out.println("Some results:");
+            while (rs.next()) { // process results one row at a time
+                int timestamp = rs.getInt(2);
+                int sound = rs.getInt(5);
+
+                System.out.println(timestamp + ", " + sound);
+                DataPoint datap = new DataPoint(timestamp, sound);
+
+                updateCurrentdB(Double.toString(sound));
+
+                series.appendData(datap, true, 24);
+            }
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+        return series;
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         //Log.d("CDA", "onBackPressed Called");
         Intent intent = new Intent(MainSound.this, MainMenu.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -75,16 +93,14 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu)
-    {
+    public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
+    public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -99,32 +115,26 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item)
-    {
+    public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_devices)
-        {
+        if (id == R.id.nav_devices) {
             Intent intent = new Intent(MainSound.this, MainDevices.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        } else if (id == R.id.nav_light)
+            startActivity(intent); } else if (id == R.id.nav_light)
         {
             Intent intent = new Intent(MainSound.this, MainLight.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        } else if (id == R.id.nav_temp)
+            startActivity(intent); } else if (id == R.id.nav_temp)
         {
             Intent intent = new Intent(MainSound.this, MainTemp.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        } else if (id == R.id.nav_sound)
+            startActivity(intent); } else if (id == R.id.nav_sound)
         {
             Intent intent = new Intent(MainSound.this, MainSound.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        } else if (id == R.id.nav_settings)
+            startActivity(intent); } else if (id == R.id.nav_settings)
         {
             Intent intent = new Intent(MainSound.this, MainSettings.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -136,9 +146,8 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
         return true;
     }
 
-    public void updateTextView(String toThis)
-    {
+    public void updateCurrentdB(String toThis) {
         TextView textView = findViewById(id.textView5);
-        textView.setText(toThis);
+        textView.setText(toThis + " dB");
     }
 }
