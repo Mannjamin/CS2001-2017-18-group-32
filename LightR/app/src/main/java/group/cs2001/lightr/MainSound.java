@@ -15,7 +15,6 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import java.sql.*;
-import java.util.*;
 
 import static group.cs2001.lightr.R.*;
 
@@ -96,6 +95,10 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_menu, menu);
+        GraphView graph = findViewById(id.graph);
+        LineGraphSeries<DataPoint> series = GetSeries();
+        graph.addSeries(series);
+
         return true;
     }
 
