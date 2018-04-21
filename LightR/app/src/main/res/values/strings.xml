@@ -10,4 +10,9 @@
     <string name="title_activity_main_light">MainLight</string>
     <string name="title_activity_main_settings">MainSettings</string>
     <string name="title_activity_main_light_settings">MainLightSettings</string>
+    <string name="max_decibels">Max Decibels</string>
+    <string name="current_decibels">Current Decibels</string>
+    <string name="button_used_to_increase_max_decibels">Button used to increase max decibels</string>
+    <string name="button_used_to_decrease_max_decibels">Button used to decrease max decibels</string>
+    <string name="display_current_decibels">Display current decibels</string>
 </resources>

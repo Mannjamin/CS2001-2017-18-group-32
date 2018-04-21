@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.jjoe64.graphview.series.BarGraphSeries;
 
 public class MainSound extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -38,13 +39,26 @@ public class MainSound extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                new DataPoint(10, 500),
-                new DataPoint(12, 750),
-                new DataPoint(14, 320),
-                new DataPoint(16, 1000),
-                new DataPoint(18, 759)
-        });
+        DataPoint[] points = new DataPoint[150];
+        for (int i = 0; i < points.length; i++)
+        {
+            points[i] = new DataPoint(i, (150 - i));
+        }
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
+
+        // set manual X bounds
+        graph.getViewport().setYAxisBoundsManual(true);
+        graph.getViewport().setMinY(0);
+        graph.getViewport().setMaxY(100);
+
+        graph.getViewport().setXAxisBoundsManual(true);
+        graph.getViewport().setMinX(0);
+        graph.getViewport().setMaxX(100);
+
+        // enable scaling and scrolling
+        graph.getViewport().setScalable(true);
+        graph.getViewport().setScalableY(true);
+
         graph.addSeries(series);
     }
 
