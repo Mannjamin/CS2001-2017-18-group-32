@@ -26,6 +26,11 @@
             android:layout_width="match_parent"
             android:layout_height="273dp"
             android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -51,8 +56,7 @@
             app:layout_constraintHorizontal_bias="0.886"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
-            app:srcCompat="@android:drawable/arrow_up_float"
-            />
+            app:srcCompat="@drawable/ic_arrow_upward_black_24dp" />
 
         <ImageButton
             android:id="@+id/imageButton2"
@@ -70,8 +74,7 @@
             app:layout_constraintStart_toStartOf="@+id/imageButton"
             app:layout_constraintTop_toBottomOf="@+id/imageButton"
             app:layout_constraintVertical_bias="0.6"
-            app:srcCompat="@android:drawable/arrow_down_float"
-            />
+            app:srcCompat="@drawable/ic_arrow_downward_black_24dp" />
 
         <EditText
             android:id="@+id/editText3"
@@ -86,13 +89,12 @@
             android:ems="10"
             android:inputType="numberSigned"
             android:singleLine="true"
-            android:textColor="@android:color/white"
+            android:textColor="?attr/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageButton"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="LabelFor"
-            />
+            tools:ignore="LabelFor" />
 
         <TextView
             android:id="@+id/textView3"
@@ -100,11 +102,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/max_decibels"
+            android:textColor="?attr/colorPrimary"
             app:layout_constraintBottom_toTopOf="@+id/editText3"
             app:layout_constraintStart_toStartOf="@+id/editText3"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
-            app:layout_constraintVertical_bias="1.0"
-            />
+            app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/textView4"
@@ -117,13 +119,13 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/current_decibels"
+            android:textColor="?attr/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/graph"
-            app:layout_constraintVertical_bias="0.013"
-            />
+            app:layout_constraintVertical_bias="0.013" />
 
         <TextView
             android:id="@+id/textView5"
@@ -141,8 +143,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView4"
-            app:layout_constraintVertical_bias="0.0"
-            />
+            app:layout_constraintVertical_bias="0.0" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
+            android:text="Save changes"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </android.support.constraint.ConstraintLayout>
 

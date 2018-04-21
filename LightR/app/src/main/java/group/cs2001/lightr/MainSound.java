@@ -10,10 +10,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import android.widget.TextView;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+
+import static group.cs2001.lightr.R.*;
 
 public class MainSound extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
@@ -21,41 +23,46 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_sound);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        setContentView(layout.activity_main_sound);
+        Toolbar toolbar = findViewById(id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, string.navigation_drawer_open, string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        GraphView graph = findViewById(R.id.graph);
-        DataPoint[] points = new DataPoint[150];
+        GraphView graph = findViewById(id.graph);
+        graph.getGridLabelRenderer().setHorizontalAxisTitle("Time (hrs)");
+        graph.getGridLabelRenderer().setVerticalAxisTitle("Sound (dB)");
+
+        DataPoint[] points = new DataPoint[100];
         for (int i = 0; i < points.length; i++)
         {
-            points[i] = new DataPoint(i, (150 - i));
+            points[i] = new DataPoint(i, (100 - i));
         }
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(points);
 
         // set manual X bounds
         graph.getViewport().setYAxisBoundsManual(true);
         graph.getViewport().setMinY(0);
-        graph.getViewport().setMaxY(100);
+        graph.getViewport().setMaxY(105);
 
         graph.getViewport().setXAxisBoundsManual(true);
         graph.getViewport().setMinX(0);
-        graph.getViewport().setMaxX(100);
+        graph.getViewport().setMaxX(105);
 
         // enable scaling and scrolling
         graph.getViewport().setScalable(true);
         graph.getViewport().setScalableY(true);
 
         graph.addSeries(series);
+
+        updateTextView(Double.toString(series.getHighestValueY()));
     }
 
     @Override
@@ -127,5 +134,11 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void updateTextView(String toThis)
+    {
+        TextView textView = findViewById(id.textView5);
+        textView.setText(toThis);
     }
 }

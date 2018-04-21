@@ -21,6 +21,8 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_main_sound" />
+    <include
+        android:id="@+id/include"
+        layout="@layout/content_main_sound" />
 
 </android.support.design.widget.CoordinatorLayout>
