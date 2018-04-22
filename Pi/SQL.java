@@ -18,30 +18,35 @@ import java.util.logging.Level;
 import java.util.logging.Logger; 
 import java.sql.Connection;
 import java.sql.DriverManager;
-  
+
 /**
  *
  * @author Garratt
  */
-public class SoundSensor {
+public class SQL {
     
-    public static int soundLimit = 50;
-    
-    public static int run(GrovePi grovePi, Monitor monitor) throws IOException, InterruptedException, ClassNotFoundException, SQLException{
+    public static void run(double temp, double light, double sound) throws SQLException, ClassNotFoundException{
         
         Statement stmt;
         ResultSet rs;
         
-        GroveSoundSensor soundSensor = new GroveSoundSensor(grovePi, 0);
-        double soundLevel = soundSensor.get();
-        int intSound = (int)Math.round(soundLevel);
-        System.out.println("Sound: " + intSound);
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String url = "jdbc:mysql://82.39.20.185:3306/lightr";
+
+        Connection con = DriverManager.getConnection( url,"garratt","password");
+        Statement select = con.createStatement();
+
+        // Execute a quesry
+
+       stmt = con.createStatement();
         
-        return intSound;
-            
+       
+       stmt.executeUpdate( "INSERT INTO lightr(temperature, lighting, sound) VALUES("+temp+", "+light+", "+sound+")");
+        
+        
+        
     }
     
+    
 }
-    
-    
-

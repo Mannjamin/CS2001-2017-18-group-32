@@ -1,4 +1,8 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package LightR;
 import org.iot.raspberry.grovepi.devices.*;
 import java.io.IOException;
@@ -12,34 +16,18 @@ import org.iot.raspberry.grovepi.GrovePi;
  */
 public class Temp {
     
-    public static boolean run(GrovePi grovePi, Monitor monitor) throws IOException{
+    public static int tempLimit = 50;
+    
+    public static double run(GrovePi grovePi, Monitor monitor) throws IOException{
         
         GroveTemperatureAndHumiditySensor dht = new GroveTemperatureAndHumiditySensor(grovePi, 4, GroveTemperatureAndHumiditySensor.Type.DHT11);
         GroveDigitalOut redLed = grovePi.getDigitalOut(3);
-        double tempLimit = 15.0;
+        
         
         double temp = new Double(dht.get().toString());
-        boolean state = false, overLimit = false;
-        
-        try{
-            
-          if (temp > tempLimit) {
-                overLimit = true;
-                //redLed.set(!state);
-                //Thread.sleep(100);
-                //redLed.set(state);
-            } 
-          
-          System.out.println("Temperature: " + temp);
-          }
+        System.out.println("Temperature: " + temp);
 
-        catch (Exception e){
-            
-            System.out.println(e);
-            
-        }
-
-        return overLimit;
+        return temp;
         
     }
     
