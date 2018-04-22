@@ -1,8 +1,11 @@
 package group.cs2001.lightr;
 
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -19,15 +22,24 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-public class MainLight extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class MainLight extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        setContentView(R.layout.activity_main_menu);
+        setContentView(R.layout.activity_main_light);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -40,17 +52,76 @@ public class MainLight extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        setContentView(R.layout.content_main_light);
-        GraphView graph = (GraphView) findViewById(R.id.graph);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                new DataPoint(10, 500),
-                new DataPoint(12, 750),
-                new DataPoint(14, 320),
-                new DataPoint(16, 1000),
-                new DataPoint(18, 759)
-        });
-        graph.addSeries(series);
+        //getJSON("http://82.39.20.185/php/lightdata.php");
 
+    }
+
+    private void getJSON(final String urlWebService) {
+        class GetJSON extends AsyncTask<Void, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
+
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            protected void onPostExecute(String JsonString) {
+                super.onPostExecute(JsonString);
+                LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
+                try {
+                    JSONArray jsonarray1 = new JSONArray(JsonString);
+                    JSONArray jsonarray = jsonarray1.getJSONArray(0);
+                    for(int i = 0; i < jsonarray.length(); i++)
+                    {
+                        JSONObject jsonobject = jsonarray.getJSONObject(i);
+                        String timestampString = jsonobject.getString("timestamp");
+                        String soundString = jsonobject.getString("light");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                        Date parsedDate = dateFormat.parse(timestampString);
+                        Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+                        int sound = Integer.parseInt(soundString);
+                        DataPoint dp = new DataPoint(timestamp, sound);
+                        series.appendData(dp, true, 24);
+                    }
+
+                    GraphView graph = findViewById(R.id.graph);
+                    graph.getGridLabelRenderer().setHorizontalAxisTitle("Time (hrs)");
+                    graph.getGridLabelRenderer().setVerticalAxisTitle("Sound (dB)");
+
+                    // enable scaling and scrolling
+                    graph.getViewport().setScalable(false);
+                    graph.getViewport().setScalableY(false);
+
+                    graph.addSeries(series);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected String doInBackground(Void... voids) {
+                try {
+                    URL url = new URL(urlWebService);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                    String json;
+
+                    while ((json = bufferedReader.readLine()) != null) {
+                        System.out.println(json);
+                        sb.append(json + "\n");
+                    }
+                    return sb.toString().trim();
+                } catch (Exception e) {
+                    return null;
+                }
+
+            }
+        }
+        GetJSON getJSON = new GetJSON();
+        getJSON.execute();
     }
 
     @Override

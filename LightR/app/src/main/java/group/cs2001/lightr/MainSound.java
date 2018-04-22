@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
@@ -53,6 +54,7 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
 
         getJSON("http://82.39.20.185/php/test.php");
     }
+
     private void getJSON(final String urlWebService) {
         class GetJSON extends AsyncTask<Void, Void, String> {
             @Override
@@ -75,19 +77,23 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
                         String soundString = jsonobject.getString("sound");
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                         Date parsedDate = dateFormat.parse(timestampString);
-                        Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
                         int sound = Integer.parseInt(soundString);
-                        DataPoint dp = new DataPoint(timestamp, sound);
+                        DataPoint dp = new DataPoint(parsedDate, sound);
                         series.appendData(dp, true, 24);
+                        updateCurrentdB(Double.toString(sound));
                     }
 
-                    GraphView graph = findViewById(id.graph);
+                    GraphView graph = findViewById(id.sound_graph);
                     graph.getGridLabelRenderer().setHorizontalAxisTitle("Time (hrs)");
                     graph.getGridLabelRenderer().setVerticalAxisTitle("Sound (dB)");
+
+                    graph.getGridLabelRenderer().setNumHorizontalLabels(5); // only 4 because of the space
 
                     // enable scaling and scrolling
                     graph.getViewport().setScalable(false);
                     graph.getViewport().setScalableY(false);
+
+                    //graph.getGridLabelRenderer().setHumanRounding(false);
 
                     graph.addSeries(series);
                 } catch (JSONException e) {
