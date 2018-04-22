@@ -15,7 +15,7 @@
         tools:layout_editor_absoluteY="0dp">
 
         <com.jjoe64.graphview.GraphView
-            android:id="@+id/graph"
+            android:id="@+id/sound_graph"
             android:layout_width="match_parent"
             android:layout_height="500px" />
 

@@ -15,6 +15,7 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import java.sql.*;
+import java.util.*;
 
 import static group.cs2001.lightr.R.*;
 
@@ -35,52 +36,12 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
         NavigationView navigationView = findViewById(id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        GraphView graph = findViewById(id.graph);
-        graph.getGridLabelRenderer().setHorizontalAxisTitle("Time (hrs)");
-        graph.getGridLabelRenderer().setVerticalAxisTitle("Sound (dB)");
-
-        // enable scaling and scrolling
-        graph.getViewport().setScalable(true);
-        graph.getViewport().setScalableY(true);
-
-        LineGraphSeries<DataPoint> series = GetSeries();
-        graph.addSeries(series);
+        getGraphData();
     }
 
-
-    public LineGraphSeries<DataPoint> GetSeries() {
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
-        try {
-            ResultSet rs;
-
-            Class.forName("com.mysql.jdbc.Driver");
-
-            String url = "jdbc:mysql://82.39.20.185:3306/lightr";
-
-            Connection con = DriverManager.getConnection( url,"USERNAME","PASSWORD");
-            Statement select = con.createStatement();
-
-            // Execute a query
-
-            rs = select.executeQuery("SELECT timestamp, sound FROM lightr");
-
-            System.out.println("Some results:");
-            while (rs.next()) { // process results one row at a time
-                int timestamp = rs.getInt(2);
-                int sound = rs.getInt(5);
-
-                System.out.println(timestamp + ", " + sound);
-                DataPoint datap = new DataPoint(timestamp, sound);
-
-                updateCurrentdB(Double.toString(sound));
-
-                series.appendData(datap, true, 24);
-            }
-        }
-        catch (Exception e) {
-            System.out.println(e);
-        }
-        return series;
+    private void getGraphData() {
+        // Now we can execute the long-running task at any time.
+        new MyAsyncTask().execute("");
     }
 
     @Override
@@ -95,10 +56,6 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        GraphView graph = findViewById(id.graph);
-        LineGraphSeries<DataPoint> series = GetSeries();
-        graph.addSeries(series);
-
         return true;
     }
 
