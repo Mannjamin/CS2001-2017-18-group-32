@@ -2,7 +2,9 @@ package group.cs2001.lightr;
 
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -58,18 +60,20 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
                 super.onPreExecute();
             }
 
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
+            protected void onPostExecute(String JsonString) {
+                super.onPostExecute(JsonString);
                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
                 try {
-                    JSONArray Json = new JSONArray(s);
-                    for(int i = 0; i < Json.length(); i++)
+                    JSONArray jsonarray1 = new JSONArray(JsonString);
+                    JSONArray jsonarray = jsonarray1.getJSONArray(0);
+                    for(int i = 0; i < jsonarray.length(); i++)
                     {
-                        JSONObject jsonObject = Json.getJSONObject(i);
-                        String timestampString = jsonObject.getString("timestamp");
-                        String soundString = jsonObject.getString("sound");
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+                        JSONObject jsonobject = jsonarray.getJSONObject(i);
+                        String timestampString = jsonobject.getString("timestamp");
+                        String soundString = jsonobject.getString("sound");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                         Date parsedDate = dateFormat.parse(timestampString);
                         Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
                         int sound = Integer.parseInt(soundString);
@@ -82,8 +86,8 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
                     graph.getGridLabelRenderer().setVerticalAxisTitle("Sound (dB)");
 
                     // enable scaling and scrolling
-                    graph.getViewport().setScalable(true);
-                    graph.getViewport().setScalableY(true);
+                    graph.getViewport().setScalable(false);
+                    graph.getViewport().setScalableY(false);
 
                     graph.addSeries(series);
                 } catch (JSONException e) {
