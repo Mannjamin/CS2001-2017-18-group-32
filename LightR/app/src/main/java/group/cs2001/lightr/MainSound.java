@@ -22,6 +22,11 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.json.*;
 
 
@@ -62,7 +67,13 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
                     for(int i = 0; i < Json.length(); i++)
                     {
                         JSONObject jsonObject = Json.getJSONObject(i);
-                        DataPoint dp = new DataPoint(jsonObject("timestamp"),jsonObject("sound"));
+                        String timestampString = jsonObject.getString("timestamp");
+                        String soundString = jsonObject.getString("sound");
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+                        Date parsedDate = dateFormat.parse(timestampString);
+                        Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+                        int sound = Integer.parseInt(soundString);
+                        DataPoint dp = new DataPoint(timestamp, sound);
                         series.appendData(dp, true, 24);
                     }
 
@@ -77,8 +88,9 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
                     graph.addSeries(series);
                 } catch (JSONException e) {
                     e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-                Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
             }
 
             @Override
