@@ -48,11 +48,27 @@ public class SQL {
         
     }
     
+    public static int limits(String sensor) throws ClassNotFoundException, SQLException{
+        
+        Statement stmt;
+        ResultSet rs;
+        
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String url = "jdbc:mysql://82.39.20.185:3306/lightr";
+
+        Connection con = DriverManager.getConnection( url,"garratt","password");
+        Statement select = con.createStatement();
+
+       rs = select.executeQuery("SELECT "+sensor+" FROM sensor_Limits WHERE ID = 1");
+       int value = 0;
+       while (rs.next()) { // process results one row at a time
+        value = rs.getInt(1);
+        
+       }
+
+       return value;
+    }
     
-    
-    
-    
-    
-    
-    
+
 }
