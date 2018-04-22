@@ -17,6 +17,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.series.DataPoint;
+import com.jjoe64.graphview.series.LineGraphSeries;
+
 public class MainTemp extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -35,6 +39,17 @@ public class MainTemp extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        setContentView(R.layout.content_main_temp);
+        GraphView graph = (GraphView) findViewById(R.id.graph);
+        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
+                new DataPoint(10, 500),
+                new DataPoint(12, 750),
+                new DataPoint(14, 320),
+                new DataPoint(16, 1000),
+                new DataPoint(18, 759)
+        });
+        graph.addSeries(series);
     }
 
     @Override
@@ -82,6 +97,10 @@ public class MainTemp extends AppCompatActivity
             startActivity(intent);
         } else if (id == R.id.nav_temp) {
             Intent intent = new Intent(MainTemp.this, MainTemp.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+        } else if (id == R.id.nav_sound) {
+            Intent intent = new Intent(MainTemp.this, MainSound.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else if (id == R.id.nav_settings) {

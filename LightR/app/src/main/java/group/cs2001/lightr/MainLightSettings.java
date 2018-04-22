@@ -1,10 +1,12 @@
 package group.cs2001.lightr;
 
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,15 +21,19 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-public class MainLight extends AppCompatActivity
+
+/**
+ *
+ * THIS IS A COPY AND PASTE OF THE TEMPERTURE PAGE.
+ */
+
+public class MainLightSettings extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        setContentView(R.layout.activity_main_menu);
+        setContentView(R.layout.activity_main_light_settings);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -40,7 +46,7 @@ public class MainLight extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        setContentView(R.layout.content_main_light);
+        setContentView(R.layout.content_main_temp);
         GraphView graph = (GraphView) findViewById(R.id.graph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
                 new DataPoint(10, 500),
@@ -50,13 +56,12 @@ public class MainLight extends AppCompatActivity
                 new DataPoint(18, 759)
         });
         graph.addSeries(series);
-
     }
 
     @Override
     public void onBackPressed() {
         //Log.d("CDA", "onBackPressed Called");
-        Intent intent = new Intent(MainLight.this, MainMenu.class);
+        Intent intent = new Intent(MainLightSettings.this, MainMenu.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
@@ -89,23 +94,23 @@ public class MainLight extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_devices) {
-            Intent intent = new Intent(MainLight.this, MainDevices.class);
+            Intent intent = new Intent(MainLightSettings.this, MainDevices.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else if (id == R.id.nav_light) {
-            Intent intent = new Intent(MainLight.this, MainLight.class);
+            Intent intent = new Intent(MainLightSettings.this, MainLight.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else if (id == R.id.nav_temp) {
-            Intent intent = new Intent(MainLight.this, MainTemp.class);
+            Intent intent = new Intent(MainLightSettings.this, MainTemp.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else if (id == R.id.nav_sound) {
-            Intent intent = new Intent(MainLight.this, MainSound.class);
+            Intent intent = new Intent(MainLightSettings.this, MainSound.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else if (id == R.id.nav_settings) {
-            Intent intent = new Intent(MainLight.this, MainSettings.class);
+            Intent intent = new Intent(MainLightSettings.this, MainSettings.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
@@ -113,18 +118,5 @@ public class MainLight extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-
-    /**
-     *  THIS IS A TEST OF A BUTTON ON CLICK METHOD.
-     *  YOU CAN FIND THE METHOD CALL WITHIN THE content_main_light.xml
-     *
-     */
-    /** Called when the user touches the button */
-    public void sendMessage(View view) {
-        Intent intent = new Intent(MainLight.this, MainLightSettings.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
     }
 }

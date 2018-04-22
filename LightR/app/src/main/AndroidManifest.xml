@@ -32,9 +32,17 @@
             android:label="Devices"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:name=".MainSound"
+            android:label="Sound"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".MainSettings"
             android:label="Global Settings"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainLightSettings"
+            android:label="Light Settings"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
