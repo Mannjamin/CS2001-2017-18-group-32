@@ -16,14 +16,11 @@ import org.iot.raspberry.grovepi.GrovePi;
  */
 public class Temp {
     
-    public static int tempLimit = 50;
+    //public static int tempLimit = SQL.limits("tempLimit");;
     
     public static double run(GrovePi grovePi, Monitor monitor) throws IOException{
         
         GroveTemperatureAndHumiditySensor dht = new GroveTemperatureAndHumiditySensor(grovePi, 4, GroveTemperatureAndHumiditySensor.Type.DHT11);
-        GroveDigitalOut redLed = grovePi.getDigitalOut(3);
-        
-        
         double temp = new Double(dht.get().toString());
         System.out.println("Temperature: " + temp);
 

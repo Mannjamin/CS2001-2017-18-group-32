@@ -40,19 +40,14 @@ public class LightR implements Example {
     @Override
     public void run(GrovePi grovePi, Monitor monitor) throws Exception {
         
-        //SQLConnect();
-        Statement stmt;
-        ResultSet rs;
-        boolean state = false;
-        GroveDigitalOut redLed = grovePi.getDigitalOut(3);
-        GroveDigitalOut greenLed = grovePi.getDigitalOut(5);
-        GroveDigitalOut blueLed = grovePi.getDigitalOut(2);
         double sound = 0;
         double light = 0;
         double temp = 0;
+        double soundLimit = SQL.limits("soundLimit");
+        double lightLimit = SQL.limits("lightLimit");
+        double tempLimit = SQL.limits("tempLimit");
         
-        
-        
+
         while (monitor.isRunning()){
             
             int LEDConfig = 0;
@@ -62,18 +57,18 @@ public class LightR implements Example {
             
             System.out.println();
             
-            if (sound > SoundSensor.soundLimit){
+            if (sound > soundLimit){
                 
                 LEDConfig += 1;
                 
                 
             }
-            if (light > Light.lightLimit){
+            if (light > lightLimit){
                     
                 LEDConfig += 2;
                     
             }
-            if (temp > Temp.tempLimit){
+            if (temp > tempLimit){
                         
                 LEDConfig += 5;        
                         

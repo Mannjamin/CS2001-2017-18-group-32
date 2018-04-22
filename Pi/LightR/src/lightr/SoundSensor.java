@@ -25,13 +25,11 @@ import java.sql.DriverManager;
  */
 public class SoundSensor {
     
-    public static int soundLimit = 50;
+    //public static int soundLimit = SQL.limits("soundLimit");;
     
     public static int run(GrovePi grovePi, Monitor monitor) throws IOException, InterruptedException, ClassNotFoundException, SQLException{
         
-        Statement stmt;
-        ResultSet rs;
-        
+
         GroveSoundSensor soundSensor = new GroveSoundSensor(grovePi, 0);
         double soundLevel = soundSensor.get();
         int intSound = (int)Math.round(soundLevel);

@@ -16,14 +16,12 @@ import org.iot.raspberry.grovepi.GrovePi;
  */
 public class Light {
     
-    public static int lightLimit = 50;
+    //public static int lightLimit = SQL.limits("lightLimit");
     
     public static double run(GrovePi grovePi, Monitor monitor) throws IOException{
         
-        GroveDigitalOut blueLed = grovePi.getDigitalOut(2);
         GroveLightSensor lightSensor = new GroveLightSensor(grovePi, 2);
         double lightLevel = lightSensor.get();
-        boolean state = false, overLimit = false;
         double lux, alpha = 3.75;
         lux = lightLevel * alpha;
 
