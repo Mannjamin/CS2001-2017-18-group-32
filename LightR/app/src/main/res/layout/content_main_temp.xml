@@ -67,6 +67,14 @@
             android:layout_below="@+id/editText2"
             android:text="Down" />
 
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true" />
+
     </RelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
