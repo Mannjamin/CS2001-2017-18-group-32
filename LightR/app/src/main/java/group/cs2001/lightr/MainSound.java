@@ -49,7 +49,7 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
         navigationView.setNavigationItemSelectedListener(this);
 
         MaxdB = "0";
-        getJSON("http://82.39.20.185/php/test.php");
+        getJSON("http://82.39.20.185/php/getSoundData.php");
     }
 
     private void getJSON(final String urlWebService) {
@@ -225,7 +225,7 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
     public void sendMessage(View view) {
         TextView theFact = findViewById(id.max_decibels);
         MaxdB = theFact.getText().toString();
-        getJSON("http://82.39.20.185/php/test.php");
+        getJSON("http://82.39.20.185/php/getSoundData.php");
     }
 
 }
