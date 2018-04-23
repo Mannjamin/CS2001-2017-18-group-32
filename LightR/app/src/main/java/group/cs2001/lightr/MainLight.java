@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
@@ -84,12 +85,12 @@ public class MainLight extends AppCompatActivity implements NavigationView.OnNav
                     {
                         JSONObject jsonobject = jsonarray.getJSONObject(i);
                         String timestampString = jsonobject.getString("timestamp");
-                        String lightString = jsonobject.getString("light");
+                        String lightString = jsonobject.getString("lighting");
                         Date parsedDate = dateFormat.parse(timestampString);
                         int light = Integer.parseInt(lightString);
                         DataPoint dp = new DataPoint(parsedDate, light);
                         series.appendData(dp, true, 24);
-                        //updateCurrentLumens(Double.toString(light));
+                        updateCurrentLumens(Double.toString(light));
 
                         if(light > maxLight){maxLight = light;}
 
@@ -224,16 +225,14 @@ public class MainLight extends AppCompatActivity implements NavigationView.OnNav
         return true;
     }
 
+    public void updateCurrentLumens(String toThis) {
+        TextView textView = findViewById(R.id.textView5);
+        textView.setText(toThis + " dB");
+    }
 
-    /**
-     *  THIS IS A TEST OF A BUTTON ON CLICK METHOD.
-     *  YOU CAN FIND THE METHOD CALL WITHIN THE content_main_light.xml
-     *
-     */
-    /** Called when the user touches the button */
     public void sendMessage(View view) {
-        Intent intent = new Intent(MainLight.this, MainLightSettings.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        TextView theFact = findViewById(R.id.max_lumens);
+        MaxLumens = theFact.getText().toString();
+        getJSON("http://82.39.20.185/php/getLightingData.php");
     }
 }
