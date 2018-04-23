@@ -1,5 +1,6 @@
 package group.cs2001.lightr;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -38,6 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MainLight extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    ProgressDialog progressDialog;
     String MaxLumens;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,9 @@ public class MainLight extends AppCompatActivity implements NavigationView.OnNav
         class GetJSON extends AsyncTask<Void, Void, String> {
             @Override
             protected void onPreExecute() {
+                progressDialog= new ProgressDialog(MainLight.this);
+                progressDialog.setMessage("Loading Data, Please Wait...");
+                progressDialog.show();
                 super.onPreExecute();
             }
 
@@ -136,6 +141,10 @@ public class MainLight extends AppCompatActivity implements NavigationView.OnNav
                     e.printStackTrace();
                 } catch (ParseException e) {
                     e.printStackTrace();
+                }
+
+                if (progressDialog.isShowing()) {
+                    progressDialog.dismiss();
                 }
             }
 
