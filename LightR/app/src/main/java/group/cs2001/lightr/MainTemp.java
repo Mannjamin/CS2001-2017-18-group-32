@@ -27,7 +27,7 @@ public class MainTemp extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_menu);
+        setContentView(R.layout.activity_main_temp);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -40,8 +40,7 @@ public class MainTemp extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        setContentView(R.layout.content_main_temp);
-        GraphView graph = (GraphView) findViewById(R.id.graph);
+        GraphView graph = (GraphView) findViewById(R.id.temp_graph);
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
                 new DataPoint(10, 500),
                 new DataPoint(12, 750),

@@ -27,12 +27,7 @@
         </menu>
     </item>
     <item android:title="Settings">
-        <menu>
-            <item
-                android:id="@+id/nav_sound"
-                android:icon="@drawable/ic_menu_sound"
-                android:title="Sound" />
-        </menu>
+        <!--Insert Button here.-->
     </item>
 
 </menu>

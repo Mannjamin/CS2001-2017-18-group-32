@@ -22,7 +22,7 @@
         >
 
         <com.jjoe64.graphview.GraphView
-            android:id="@+id/graph"
+            android:id="@+id/sound_graph"
             android:layout_width="match_parent"
             android:layout_height="273dp"
             android:layout_marginBottom="8dp"
@@ -37,7 +37,8 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"
+            />
 
         <ImageButton
             android:id="@+id/imageButton"
@@ -56,7 +57,8 @@
             app:layout_constraintHorizontal_bias="0.886"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
-            app:srcCompat="@drawable/ic_arrow_upward_black_24dp" />
+            app:srcCompat="@drawable/ic_arrow_upward_black_24dp"
+            tools:ignore="VectorDrawableCompat" />
 
         <ImageButton
             android:id="@+id/imageButton2"
@@ -74,10 +76,11 @@
             app:layout_constraintStart_toStartOf="@+id/imageButton"
             app:layout_constraintTop_toBottomOf="@+id/imageButton"
             app:layout_constraintVertical_bias="0.6"
-            app:srcCompat="@drawable/ic_arrow_downward_black_24dp" />
+            app:srcCompat="@drawable/ic_arrow_downward_black_24dp"
+            tools:ignore="VectorDrawableCompat" />
 
         <EditText
-            android:id="@+id/editText3"
+            android:id="@+id/max_decibels"
             style="@android:style/Widget.EditText"
             android:layout_width="185dp"
             android:layout_height="wrap_content"
@@ -86,32 +89,41 @@
             android:layout_marginLeft="72dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="72dp"
+            android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="numberSigned"
             android:singleLine="true"
             android:textColor="?attr/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageButton"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.025"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            app:layout_constraintVertical_bias="1.0"
             tools:ignore="LabelFor" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="15dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/max_decibels"
             android:textColor="?attr/colorPrimary"
-            app:layout_constraintBottom_toTopOf="@+id/editText3"
-            app:layout_constraintStart_toStartOf="@+id/editText3"
+            app:layout_constraintBottom_toTopOf="@+id/max_decibels"
+            app:layout_constraintEnd_toStartOf="@+id/imageButton"
+            app:layout_constraintHorizontal_bias="0.315"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
             app:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
-            android:layout_height="15dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
@@ -124,8 +136,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/graph"
-            app:layout_constraintVertical_bias="0.013" />
+            app:layout_constraintTop_toTopOf="@+id/sound_graph"
+            app:layout_constraintVertical_bias="0.521" />
 
         <TextView
             android:id="@+id/textView5"
@@ -153,11 +165,15 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
-            android:text="Save changes"
+            android:layout_marginTop="8dp"
+            android:onClick="sendMessage"
+            android:text="@string/save_changes"
             android:textColor="?attr/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText3"
+            app:layout_constraintVertical_bias="0.868" />
 
     </android.support.constraint.ConstraintLayout>
 

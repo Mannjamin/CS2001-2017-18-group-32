@@ -1,8 +1,11 @@
 package group.cs2001.lightr;
 
 import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -19,15 +22,24 @@ import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
 
-public class MainLight extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class MainLight extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-        setContentView(R.layout.activity_main_menu);
+        setContentView(R.layout.activity_main_light);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -39,18 +51,6 @@ public class MainLight extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        setContentView(R.layout.content_main_light);
-        GraphView graph = (GraphView) findViewById(R.id.graph);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                new DataPoint(10, 500),
-                new DataPoint(12, 750),
-                new DataPoint(14, 320),
-                new DataPoint(16, 1000),
-                new DataPoint(18, 759)
-        });
-        graph.addSeries(series);
-
     }
 
     @Override

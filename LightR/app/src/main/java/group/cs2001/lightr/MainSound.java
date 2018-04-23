@@ -1,24 +1,41 @@
 package group.cs2001.lightr;
-
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
+import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
-import java.sql.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import org.json.*;
+
 
 import static group.cs2001.lightr.R.*;
 
 public class MainSound extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    String MaxdB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,52 +52,121 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
         NavigationView navigationView = findViewById(id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        GraphView graph = findViewById(id.graph);
-        graph.getGridLabelRenderer().setHorizontalAxisTitle("Time (hrs)");
-        graph.getGridLabelRenderer().setVerticalAxisTitle("Sound (dB)");
-
-        // enable scaling and scrolling
-        graph.getViewport().setScalable(true);
-        graph.getViewport().setScalableY(true);
-
-        LineGraphSeries<DataPoint> series = GetSeries();
-        graph.addSeries(series);
+        MaxdB = "0";
+        getJSON("http://82.39.20.185/php/test.php");
     }
 
+    private void getJSON(final String urlWebService) {
+        class GetJSON extends AsyncTask<Void, Void, String> {
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+            }
 
-    public LineGraphSeries<DataPoint> GetSeries() {
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
-        try {
-            ResultSet rs;
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+            @Override
+            protected void onPostExecute(String JsonString) {
+                super.onPostExecute(JsonString);
+                LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
+                LineGraphSeries<DataPoint> maxseries = new LineGraphSeries<>();
+                try {
+                    int maxSound = 0;
+                    int minSound = 1000;
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    Date maxDate = dateFormat.parse("1970-01-01 00:00:00");
+                    Date minDate = dateFormat.parse("3000-01-01 00:00:00");
+                    JSONArray jsonarray1 = new JSONArray(JsonString);
+                    JSONArray jsonarray = jsonarray1.getJSONArray(0);
+                    for(int i = 0; i < jsonarray.length(); i++)
+                    {
+                        JSONObject jsonobject = jsonarray.getJSONObject(i);
+                        String timestampString = jsonobject.getString("timestamp");
+                        String soundString = jsonobject.getString("sound");
+                        Date parsedDate = dateFormat.parse(timestampString);
+                        int sound = Integer.parseInt(soundString);
+                        DataPoint dp = new DataPoint(parsedDate, sound);
+                        series.appendData(dp, true, 24);
+                        updateCurrentdB(Double.toString(sound));
 
-            Class.forName("com.mysql.jdbc.Driver");
+                        if(sound > maxSound)
+                        {
+                            maxSound = sound;
+                        }
 
-            String url = "jdbc:mysql://82.39.20.185:3306/lightr";
+                        if(sound < minSound)
+                        {
+                            minSound = sound;
+                        }
 
-            Connection con = DriverManager.getConnection( url,"USERNAME","PASSWORD");
-            Statement select = con.createStatement();
+                        if(parsedDate.after(maxDate))
+                        {
+                            maxDate = parsedDate;
+                        }
 
-            // Execute a query
+                        if(parsedDate.before(minDate))
+                        {
+                            minDate = parsedDate;
+                        }
+                    }
+                    DataPoint StartingMaxdp = new DataPoint(minDate, Integer.parseInt(MaxdB));
+                    DataPoint EndingMaxdp2 = new DataPoint(maxDate, Integer.parseInt(MaxdB));
+                    maxseries.appendData(StartingMaxdp, true, 10);
+                    maxseries.appendData(EndingMaxdp2, true, 10);
+                    DataPoint[] dpArray = {StartingMaxdp, EndingMaxdp2};
+                    maxseries.resetData(dpArray);
+                    maxseries.setBackgroundColor(color.colorAccent);
 
-            rs = select.executeQuery("SELECT timestamp, sound FROM lightr");
+                    dateFormat = new SimpleDateFormat("mm");
 
-            System.out.println("Some results:");
-            while (rs.next()) { // process results one row at a time
-                int timestamp = rs.getInt(2);
-                int sound = rs.getInt(5);
+                    GraphView graph = findViewById(id.sound_graph);
+                    graph.getGridLabelRenderer().setHorizontalAxisTitle("Time (hrs)");
+                    graph.getGridLabelRenderer().setVerticalAxisTitle("Sound (dB)");
 
-                System.out.println(timestamp + ", " + sound);
-                DataPoint datap = new DataPoint(timestamp, sound);
+                    graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(MainSound.this, dateFormat));
+                    graph.getGridLabelRenderer().setNumHorizontalLabels(10);
 
-                updateCurrentdB(Double.toString(sound));
+                    graph.getViewport().setScalable(true);
+                    graph.getViewport().setScalableY(true);
 
-                series.appendData(datap, true, 24);
+                    graph.getViewport().setYAxisBoundsManual(true);
+                    graph.getViewport().setMinY(minSound);
+                    graph.getViewport().setMaxY(maxSound);
+
+                    graph.getViewport().setXAxisBoundsManual(true);
+                    graph.getViewport().setMinX(minDate.getTime());
+                    graph.getViewport().setMaxX(maxDate.getTime());
+
+                    graph.addSeries(maxseries);
+                    graph.addSeries(series);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            protected String doInBackground(Void... voids) {
+                try {
+                    URL url = new URL(urlWebService);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                    String json;
+
+                    while ((json = bufferedReader.readLine()) != null) {
+                        System.out.println(json);
+                        sb.append(json + "\n");
+                    }
+                    return sb.toString().trim();
+                } catch (Exception e) {
+                    return null;
+                }
+
             }
         }
-        catch (Exception e) {
-            System.out.println(e);
-        }
-        return series;
+        GetJSON getJSON = new GetJSON();
+        getJSON.execute();
     }
 
     @Override
@@ -95,10 +181,6 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main_menu, menu);
-        GraphView graph = findViewById(id.graph);
-        LineGraphSeries<DataPoint> series = GetSeries();
-        graph.addSeries(series);
-
         return true;
     }
 
@@ -153,4 +235,11 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
         TextView textView = findViewById(id.textView5);
         textView.setText(toThis + " dB");
     }
+
+    public void sendMessage(View view) {
+        TextView theFact = findViewById(id.max_decibels);
+        MaxdB = theFact.getText().toString();
+        getJSON("http://82.39.20.185/php/test.php");
+    }
+
 }
