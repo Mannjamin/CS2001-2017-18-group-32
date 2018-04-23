@@ -1,4 +1,5 @@
 package group.cs2001.lightr;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -31,6 +32,7 @@ import org.json.*;
 import static group.cs2001.lightr.R.*;
 
 public class MainSound extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    ProgressDialog progressDialog;
     String MaxdB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,9 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
         class GetJSON extends AsyncTask<Void, Void, String> {
             @Override
             protected void onPreExecute() {
+                progressDialog= new ProgressDialog(MainSound.this);
+                progressDialog.setMessage("Loading Data, Please Wait...");
+                progressDialog.show();
                 super.onPreExecute();
             }
 
@@ -128,6 +133,10 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
                     e.printStackTrace();
                 } catch (ParseException e) {
                     e.printStackTrace();
+                }
+
+                if (progressDialog.isShowing()) {
+                    progressDialog.dismiss();
                 }
             }
 
