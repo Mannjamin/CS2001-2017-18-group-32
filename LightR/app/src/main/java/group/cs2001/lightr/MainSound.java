@@ -1,6 +1,6 @@
 package group.cs2001.lightr;
-
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,16 +11,16 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -29,14 +29,13 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
 import org.json.*;
 
 
 import static group.cs2001.lightr.R.*;
 
 public class MainSound extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    String MaxdB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +52,7 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
         NavigationView navigationView = findViewById(id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        MaxdB = "0";
         getJSON("http://82.39.20.185/php/test.php");
     }
 
@@ -68,7 +68,13 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
             protected void onPostExecute(String JsonString) {
                 super.onPostExecute(JsonString);
                 LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
+                LineGraphSeries<DataPoint> maxseries = new LineGraphSeries<>();
                 try {
+                    int maxSound = 0;
+                    int minSound = 1000;
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    Date maxDate = dateFormat.parse("1970-01-01 00:00:00");
+                    Date minDate = dateFormat.parse("3000-01-01 00:00:00");
                     JSONArray jsonarray1 = new JSONArray(JsonString);
                     JSONArray jsonarray = jsonarray1.getJSONArray(0);
                     for(int i = 0; i < jsonarray.length(); i++)
@@ -76,26 +82,61 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
                         JSONObject jsonobject = jsonarray.getJSONObject(i);
                         String timestampString = jsonobject.getString("timestamp");
                         String soundString = jsonobject.getString("sound");
-                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
                         Date parsedDate = dateFormat.parse(timestampString);
                         int sound = Integer.parseInt(soundString);
                         DataPoint dp = new DataPoint(parsedDate, sound);
                         series.appendData(dp, true, 24);
                         updateCurrentdB(Double.toString(sound));
+
+                        if(sound > maxSound)
+                        {
+                            maxSound = sound;
+                        }
+
+                        if(sound < minSound)
+                        {
+                            minSound = sound;
+                        }
+
+                        if(parsedDate.after(maxDate))
+                        {
+                            maxDate = parsedDate;
+                        }
+
+                        if(parsedDate.before(minDate))
+                        {
+                            minDate = parsedDate;
+                        }
                     }
+                    DataPoint StartingMaxdp = new DataPoint(minDate, Integer.parseInt(MaxdB));
+                    DataPoint EndingMaxdp2 = new DataPoint(maxDate, Integer.parseInt(MaxdB));
+                    maxseries.appendData(StartingMaxdp, true, 10);
+                    maxseries.appendData(EndingMaxdp2, true, 10);
+                    DataPoint[] dpArray = {StartingMaxdp, EndingMaxdp2};
+                    maxseries.resetData(dpArray);
+                    maxseries.setBackgroundColor(color.colorAccent);
+
+                    dateFormat = new SimpleDateFormat("mm");
 
                     GraphView graph = findViewById(id.sound_graph);
                     graph.getGridLabelRenderer().setHorizontalAxisTitle("Time (hrs)");
                     graph.getGridLabelRenderer().setVerticalAxisTitle("Sound (dB)");
 
-                    graph.getGridLabelRenderer().setNumHorizontalLabels(5); // only 4 because of the space
+                    graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(MainSound.this, dateFormat));
+                    graph.getGridLabelRenderer().setNumHorizontalLabels(10);
 
-                    // enable scaling and scrolling
-                    graph.getViewport().setScalable(false);
-                    graph.getViewport().setScalableY(false);
+                    graph.getViewport().setScalable(true);
+                    graph.getViewport().setScalableY(true);
 
-                    //graph.getGridLabelRenderer().setHumanRounding(false);
+                    graph.getViewport().setYAxisBoundsManual(true);
+                    graph.getViewport().setMinY(minSound);
+                    graph.getViewport().setMaxY(maxSound);
 
+                    graph.getViewport().setXAxisBoundsManual(true);
+                    graph.getViewport().setMinX(minDate.getTime());
+                    graph.getViewport().setMaxX(maxDate.getTime());
+
+                    graph.addSeries(maxseries);
                     graph.addSeries(series);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -194,4 +235,11 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
         TextView textView = findViewById(id.textView5);
         textView.setText(toThis + " dB");
     }
+
+    public void sendMessage(View view) {
+        TextView theFact = findViewById(id.max_decibels);
+        MaxdB = theFact.getText().toString();
+        getJSON("http://82.39.20.185/php/test.php");
+    }
+
 }
