@@ -34,7 +34,7 @@ public class LightR implements Example {
      * @throws Exception
      */
     
-    public static int waitTime = 5000;
+    public static int waitTime = 60000;
     
     
     @Override
