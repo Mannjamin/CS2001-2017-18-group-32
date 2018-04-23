@@ -1,6 +1,5 @@
 package group.cs2001.lightr;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,13 +10,11 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.format.DateFormat;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -25,7 +22,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -53,7 +49,7 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
         navigationView.setNavigationItemSelectedListener(this);
 
         MaxdB = "0";
-        getJSON("http://82.39.20.185/php/test.php");
+        getJSON("http://82.39.20.185/php/getSoundData.php");
     }
 
     private void getJSON(final String urlWebService) {
@@ -88,25 +84,13 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
                         series.appendData(dp, true, 24);
                         updateCurrentdB(Double.toString(sound));
 
-                        if(sound > maxSound)
-                        {
-                            maxSound = sound;
-                        }
+                        if(sound > maxSound){maxSound = sound;}
 
-                        if(sound < minSound)
-                        {
-                            minSound = sound;
-                        }
+                        if(sound < minSound){minSound = sound;}
 
-                        if(parsedDate.after(maxDate))
-                        {
-                            maxDate = parsedDate;
-                        }
+                        if(parsedDate.after(maxDate)){maxDate = parsedDate;}
 
-                        if(parsedDate.before(minDate))
-                        {
-                            minDate = parsedDate;
-                        }
+                        if(parsedDate.before(minDate)){minDate = parsedDate;}
                     }
                     DataPoint StartingMaxdp = new DataPoint(minDate, Integer.parseInt(MaxdB));
                     DataPoint EndingMaxdp2 = new DataPoint(maxDate, Integer.parseInt(MaxdB));
@@ -114,11 +98,13 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
                     maxseries.appendData(EndingMaxdp2, true, 10);
                     DataPoint[] dpArray = {StartingMaxdp, EndingMaxdp2};
                     maxseries.resetData(dpArray);
-                    maxseries.setBackgroundColor(color.colorAccent);
+                    maxseries.setThickness(10);
+                    maxseries.setDrawBackground(true);
 
                     dateFormat = new SimpleDateFormat("mm");
 
                     GraphView graph = findViewById(id.sound_graph);
+                    graph.removeAllSeries();
                     graph.getGridLabelRenderer().setHorizontalAxisTitle("Time (hrs)");
                     graph.getGridLabelRenderer().setVerticalAxisTitle("Sound (dB)");
 
@@ -239,7 +225,7 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
     public void sendMessage(View view) {
         TextView theFact = findViewById(id.max_decibels);
         MaxdB = theFact.getText().toString();
-        getJSON("http://82.39.20.185/php/test.php");
+        getJSON("http://82.39.20.185/php/getSoundData.php");
     }
 
 }

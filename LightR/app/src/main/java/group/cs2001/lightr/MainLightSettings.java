@@ -55,7 +55,7 @@ public class MainLightSettings extends AppCompatActivity
                 new DataPoint(16, 1000),
                 new DataPoint(18, 759)
         });
-        graph.addSeries(series);
+        //graph.addSeries(series);
     }
 
     @Override
