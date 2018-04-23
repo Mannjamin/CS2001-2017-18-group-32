@@ -21,6 +21,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".MainStartupSettings"
+            android:label="Initial Setup"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
             android:name=".MainMenu"
             android:label="Temperature"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -47,7 +51,7 @@
         <activity
             android:name=".MainLightSettings"
             android:label="Light Settings"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

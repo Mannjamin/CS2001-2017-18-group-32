@@ -25,31 +25,31 @@ public class MainStartupSettings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_startup_settings);
 
-//        Continue = (Button) findViewById(R.id.btnContinue);
-//
-//        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-//        Spinner spinner2 = (Spinner) findViewById(R.id.spinner2);
-//
-//        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(StartupSettings.this,
-//                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.languages));
-//        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinner.setAdapter(myAdapter);
-//
-//        ArrayAdapter<String> myAdapter2 = new ArrayAdapter<String>(StartupSettings.this,
-//                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.accessibility));
-//        myAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        spinner2.setAdapter(myAdapter2);
-//
-//        Continue.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                openConnectionPage();
-//            }
-//        });
+        Continue = (Button) findViewById(R.id.btnContinue);
+
+        Spinner spinner = (Spinner) findViewById(R.id.spinner);
+        Spinner spinner2 = (Spinner) findViewById(R.id.spinner2);
+
+        ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(MainStartupSettings.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.languages));
+        myAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(myAdapter);
+
+        ArrayAdapter<String> myAdapter2 = new ArrayAdapter<String>(MainStartupSettings.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.accessibility));
+        myAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner2.setAdapter(myAdapter2);
+
+        Continue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openConnectionPage();
+            }
+        });
     }
 
     public void openConnectionPage() {
-//        Intent intent5 = new Intent(this, ConnectionPage.class);
-//        startActivity(intent5);
+        Intent intent5 = new Intent(this, MainMenu.class);
+        startActivity(intent5);
     }
 }
