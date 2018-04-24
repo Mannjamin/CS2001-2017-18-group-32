@@ -31,6 +31,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.json.*;
 
+import static group.cs2001.lightr.R.*;
+
 
 public class MainTemp extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -39,16 +41,16 @@ public class MainTemp extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_temp);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+                this, drawer, toolbar, string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         MaxT = "0";
         getJSON("http://82.39.20.185/php/getTemperatureData.php");
@@ -108,7 +110,7 @@ public class MainTemp extends AppCompatActivity
                     GraphView graph = findViewById(id.temp_graph);
                     graph.removeAllSeries();
                     graph.getGridLabelRenderer().setHorizontalAxisTitle("Time (hrs)");
-                    graph.getGridLabelRenderer().setVerticalAxisTitle("Sound (dB)");
+                    graph.getGridLabelRenderer().setVerticalAxisTitle("Temperature (dB)");
 
                     graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(MainTemp.this, dateFormat));
                     graph.getGridLabelRenderer().setNumHorizontalLabels(10);
