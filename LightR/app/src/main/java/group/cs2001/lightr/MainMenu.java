@@ -3,10 +3,7 @@ package group.cs2001.lightr;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,7 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.ImageButton;
 
 public class MainMenu extends AppCompatActivity
@@ -58,7 +54,7 @@ public class MainMenu extends AppCompatActivity
         final ImageButton calendarMenuButton = findViewById(R.id.calendarMenuButton);
         calendarMenuButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(MainMenu.this, MainLightSettings.class);
+                Intent intent = new Intent(MainMenu.this, MainCalendar.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }
@@ -123,24 +119,21 @@ public class MainMenu extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_devices) {
-            Intent intent = new Intent(MainMenu.this, MainDevices.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        } else if (id == R.id.nav_light) {
+        if (id == R.id.nav_light)
+        {
             Intent intent = new Intent(MainMenu.this, MainLight.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        } else if (id == R.id.nav_temp) {
+            startActivity(intent); } else if (id == R.id.nav_temp)
+        {
             Intent intent = new Intent(MainMenu.this, MainTemp.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        } else if (id == R.id.nav_sound) {
+            startActivity(intent); } else if (id == R.id.nav_sound)
+        {
             Intent intent = new Intent(MainMenu.this, MainSound.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        } else if (id == R.id.nav_settings) {
-            Intent intent = new Intent(MainMenu.this, MainSettings.class);
+            startActivity(intent); } else if (id == R.id.nav_settings)
+        {
+            Intent intent = new Intent(MainMenu.this, MainStartupSettings.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }

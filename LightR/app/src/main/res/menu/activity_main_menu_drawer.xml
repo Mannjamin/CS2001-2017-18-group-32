@@ -3,13 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_devices"
-            android:icon="@drawable/ic_menu_devices"
-            android:title="Devices" />
-    </group>
-
     <item android:title="Sensors">
         <menu>
             <item
@@ -27,7 +20,12 @@
         </menu>
     </item>
     <item android:title="Settings">
-        <!--Insert Button here.-->
+        <menu>
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_menu_settings"
+                android:title="Settings" />
+        </menu>
     </item>
 
 </menu>
