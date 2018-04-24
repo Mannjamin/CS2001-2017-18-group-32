@@ -46,16 +46,6 @@ public class MainLightSettings extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        setContentView(R.layout.content_main_temp);
-        GraphView graph = (GraphView) findViewById(R.id.graph);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                new DataPoint(10, 500),
-                new DataPoint(12, 750),
-                new DataPoint(14, 320),
-                new DataPoint(16, 1000),
-                new DataPoint(18, 759)
-        });
-        //graph.addSeries(series);
     }
 
     @Override
