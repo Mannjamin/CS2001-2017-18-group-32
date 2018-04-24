@@ -20,6 +20,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
@@ -70,7 +71,24 @@ public class MainTemp extends AppCompatActivity
 
             @Override
             protected String doInBackground(Void... voids) {
-                return null;
+                try {
+                    URL url = new URL(urlWebService);
+                    HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                    StringBuilder sb = new StringBuilder();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                    String json;
+
+                    while ((json = bufferedReader.readLine()) != null) {
+                        System.out.println(json);
+                        sb.append(json + "\n");
+                    }
+                    return sb.toString().trim();
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(),
+                            "Unable to connect to server", Toast.LENGTH_SHORT)
+                            .show();
+                    return null;
+                }
             }
         }
         GetJSON getJSON = new GetJSON();
