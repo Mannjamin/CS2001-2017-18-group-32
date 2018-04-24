@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="group.cs2001.lightr.MainTemp"
@@ -37,7 +37,8 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"
+            />
 
         <ImageButton
             android:id="@+id/imageButton"
@@ -79,7 +80,11 @@
             tools:ignore="VectorDrawableCompat" />
 
         <EditText
+<<<<<<< HEAD
             android:id="@+id/max_temp"
+=======
+            android:id="@+id/max_decibels"
+>>>>>>> f04e409b3bc2404ccccee92266ccb8aa7044bbc8
             style="@android:style/Widget.EditText"
             android:layout_width="185dp"
             android:layout_height="wrap_content"
@@ -88,25 +93,32 @@
             android:layout_marginLeft="72dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="72dp"
+            android:layout_marginTop="8dp"
             android:ems="10"
             android:inputType="numberSigned"
             android:singleLine="true"
             android:textColor="?attr/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/imageButton"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.025"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            app:layout_constraintVertical_bias="1.0"
             tools:ignore="LabelFor" />
 
         <TextView
             android:id="@+id/textView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+<<<<<<< HEAD
             android:layout_marginBottom="8dp"
+=======
+>>>>>>> f04e409b3bc2404ccccee92266ccb8aa7044bbc8
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
+<<<<<<< HEAD
             android:layout_marginTop="8dp"
             android:text="Max Temperature"
             android:textColor="?attr/colorPrimary"
@@ -116,12 +128,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/current_temp"
             tools:ignore="UnknownId" />
+=======
+            android:layout_marginTop="48dp"
+            android:text="@string/max_decibels"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintEnd_toStartOf="@+id/imageButton"
+            app:layout_constraintHorizontal_bias="0.315"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView5" />
+>>>>>>> f04e409b3bc2404ccccee92266ccb8aa7044bbc8
 
         <TextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
+<<<<<<< HEAD
             android:layout_height="15dp"
             android:layout_marginBottom="268dp"
+=======
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+>>>>>>> f04e409b3bc2404ccccee92266ccb8aa7044bbc8
             android:layout_marginEnd="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
@@ -133,9 +159,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
+<<<<<<< HEAD
             app:layout_constraintTop_toBottomOf="@+id/graph"
             app:layout_constraintVertical_bias="0.013"
             tools:ignore="UnknownId" />
+=======
+            app:layout_constraintTop_toTopOf="@+id/sound_graph"
+            app:layout_constraintVertical_bias="0.521" />
+>>>>>>> f04e409b3bc2404ccccee92266ccb8aa7044bbc8
 
         <TextView
             android:id="@+id/current_temp"
@@ -163,12 +194,18 @@
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
+<<<<<<< HEAD
+=======
+            android:layout_marginTop="8dp"
+>>>>>>> f04e409b3bc2404ccccee92266ccb8aa7044bbc8
             android:onClick="sendMessage"
             android:text="@string/save_changes"
             android:textColor="?attr/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText3"
+            app:layout_constraintVertical_bias="0.868" />
 
     </android.support.constraint.ConstraintLayout>
 
