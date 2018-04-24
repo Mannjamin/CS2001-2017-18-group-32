@@ -40,7 +40,11 @@ public class MainTemp extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        
+        getJSON("http://82.39.20.185/php/getTemperatureData.php");
+    }
+
+    private void getJSON(final String urlWebService) {
+
     }
 
     @Override
