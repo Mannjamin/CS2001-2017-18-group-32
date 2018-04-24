@@ -7,30 +7,24 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="group.cs2001.lightr.MainMenu"
     tools:layout_editor_absoluteY="81dp"
-    tools:showIn="@layout/app_bar_main_menu">
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:text="Hello World!"-->
-    <!--app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--app:layout_constraintLeft_toLeftOf="parent"-->
-    <!--app:layout_constraintRight_toRightOf="parent"-->
-    <!--app:layout_constraintTop_toTopOf="parent" />-->
+    tools:showIn="@layout/app_bar_main_menu"
+    android:background="@color/colorPrimaryDark">
 
     <ImageButton
         android:id="@+id/temperatureMenuButton"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
         android:layout_marginBottom="29dp"
         android:layout_marginEnd="22dp"
         android:layout_marginLeft="26dp"
         android:layout_marginRight="22dp"
         android:layout_marginStart="26dp"
         android:layout_marginTop="54dp"
+        android:background="@color/text_color_primary"
         android:contentDescription="temperature"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_menu_temp"
+        android:tint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toTopOf="@+id/soundMenuButton"
         app:layout_constraintEnd_toStartOf="@+id/lightMenuButton"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,15 +32,17 @@
 
     <ImageButton
         android:id="@+id/lightMenuButton"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
         android:layout_marginBottom="29dp"
         android:layout_marginEnd="36dp"
         android:layout_marginRight="36dp"
         android:layout_marginTop="54dp"
+        android:background="@color/text_color_primary"
         android:contentDescription="bulb"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_menu_light"
+        android:tint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toTopOf="@+id/calendarMenuButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/temperatureMenuButton"
@@ -54,14 +50,16 @@
 
     <ImageButton
         android:id="@+id/calendarMenuButton"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
         android:layout_marginBottom="128dp"
         android:layout_marginEnd="36dp"
         android:layout_marginRight="36dp"
+        android:background="@color/text_color_primary"
         android:contentDescription="calendar"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_menu_calendar"
+        android:tint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/soundMenuButton"
@@ -69,16 +67,18 @@
 
     <ImageButton
         android:id="@+id/soundMenuButton"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
         android:layout_marginBottom="128dp"
         android:layout_marginEnd="22dp"
         android:layout_marginLeft="26dp"
         android:layout_marginRight="22dp"
         android:layout_marginStart="26dp"
+        android:background="@color/text_color_primary"
         android:contentDescription="speaker"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_menu_sound"
+        android:tint="@color/colorPrimaryDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/calendarMenuButton"
         app:layout_constraintStart_toStartOf="parent"
