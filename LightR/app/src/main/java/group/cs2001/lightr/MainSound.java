@@ -15,6 +15,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
@@ -155,9 +157,11 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
                     }
                     return sb.toString().trim();
                 } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(),
+                            "Unable to connect to server", Toast.LENGTH_SHORT)
+                            .show();
                     return null;
                 }
-
             }
         }
         GetJSON getJSON = new GetJSON();
