@@ -114,7 +114,7 @@ public class MainTemp extends AppCompatActivity implements NavigationView.OnNavi
                     GraphView graph = findViewById(R.id.temp_graph);
                     graph.removeAllSeries();
                     graph.getGridLabelRenderer().setHorizontalAxisTitle("Time (hrs)");
-                    graph.getGridLabelRenderer().setVerticalAxisTitle("Sound (dB)");
+                    graph.getGridLabelRenderer().setVerticalAxisTitle("Temperature (°C)");
 
                     graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(MainTemp.this, dateFormat));
                     graph.getGridLabelRenderer().setNumHorizontalLabels(10);
