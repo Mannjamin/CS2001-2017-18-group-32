@@ -1,17 +1,11 @@
 package group.cs2001.lightr;
 
-import android.Manifest;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,39 +14,43 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
-
-import org.json.JSONException;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import org.json.*;
+
 
 public class MainTemp extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    String MaxT;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_temp);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        MaxT = "0";
         getJSON("http://82.39.20.185/php/getTemperatureData.php");
     }
 
@@ -66,7 +64,73 @@ public class MainTemp extends AppCompatActivity
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             protected void onPostExecute(String JsonString) {
+                super.onPostExecute(JsonString);
+                int maxtemp = 0;
+                int minTemp= 1000;
+                LineGraphSeries<DataPoint> series = new LineGraphSeries<>();
+                LineGraphSeries<DataPoint> maxseries = new LineGraphSeries<>();
+                try {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    Date maxDate = dateFormat.parse("1970-01-01 00:00:00");
+                    Date minDate = dateFormat.parse("3000-01-01 00:00:00");
+                    JSONArray jsonarray1 = new JSONArray(JsonString);
+                    JSONArray jsonarray = jsonarray1.getJSONArray(0);
+                    for(int i = 0; i < jsonarray.length(); i++)
+                    {
+                        JSONObject jsonobject = jsonarray.getJSONObject(i);
+                        String timestampString = jsonobject.getString("timestamp");
+                        String tempString = jsonobject.getString("temperature");
+                        Date parsedDate = dateFormat.parse(timestampString);
+                        int temperature = Integer.parseInt(tempString);
+                        DataPoint dp = new DataPoint(parsedDate, temperature);
+                        series.appendData(dp, true, 24);
+                        updateCurrentdB(Double.toString(temperature));
 
+                        if(temperature > maxtemp){maxtemp = temperature;}
+
+                        if(temperature < minTemp){minTemp = temperature;}
+
+                        if(parsedDate.after(maxDate)){maxDate = parsedDate;}
+
+                        if(parsedDate.before(minDate)){minDate = parsedDate;}
+                    }
+                    DataPoint StartingMaxdp = new DataPoint(minDate, Integer.parseInt(MaxT));
+                    DataPoint EndingMaxdp2 = new DataPoint(maxDate, Integer.parseInt(MaxT));
+                    maxseries.appendData(StartingMaxdp, true, 10);
+                    maxseries.appendData(EndingMaxdp2, true, 10);
+                    DataPoint[] dpArray = {StartingMaxdp, EndingMaxdp2};
+                    maxseries.resetData(dpArray);
+                    maxseries.setThickness(10);
+                    maxseries.setDrawBackground(true);
+
+                    dateFormat = new SimpleDateFormat("mm");
+
+                    GraphView graph = findViewById(id.temp_graph);
+                    graph.removeAllSeries();
+                    graph.getGridLabelRenderer().setHorizontalAxisTitle("Time (hrs)");
+                    graph.getGridLabelRenderer().setVerticalAxisTitle("Sound (dB)");
+
+                    graph.getGridLabelRenderer().setLabelFormatter(new DateAsXAxisLabelFormatter(MainTemp.this, dateFormat));
+                    graph.getGridLabelRenderer().setNumHorizontalLabels(10);
+
+                    graph.getViewport().setScalable(true);
+                    graph.getViewport().setScalableY(true);
+
+                    graph.getViewport().setYAxisBoundsManual(true);
+                    graph.getViewport().setMinY(minTemp);
+                    graph.getViewport().setMaxY(maxtemp);
+
+                    graph.getViewport().setXAxisBoundsManual(true);
+                    graph.getViewport().setMinX(minDate.getTime());
+                    graph.getViewport().setMaxX(maxDate.getTime());
+
+                    graph.addSeries(maxseries);
+                    graph.addSeries(series);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -155,5 +219,15 @@ public class MainTemp extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void updateCurrentdB(String toThis) {
+        TextView textView = findViewById(R.id.textView5);
+        textView.setText(toThis + " dB");
+    }
+
+    public void sendMessage(View view) {
+        TextView theFact = findViewById(R.id.max_decibels);
+        getJSON("http://82.39.20.185/php/getTemperatureData.php");
     }
 }
