@@ -207,24 +207,21 @@ public class MainLight extends AppCompatActivity implements NavigationView.OnNav
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_devices) {
-            Intent intent = new Intent(MainLight.this, MainDevices.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        } else if (id == R.id.nav_light) {
+        if (id == R.id.nav_light)
+        {
             Intent intent = new Intent(MainLight.this, MainLight.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        } else if (id == R.id.nav_temp) {
+            startActivity(intent); } else if (id == R.id.nav_temp)
+        {
             Intent intent = new Intent(MainLight.this, MainTemp.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        } else if (id == R.id.nav_sound) {
+            startActivity(intent); } else if (id == R.id.nav_sound)
+        {
             Intent intent = new Intent(MainLight.this, MainSound.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        } else if (id == R.id.nav_settings) {
-            Intent intent = new Intent(MainLight.this, MainSettings.class);
+            startActivity(intent); } else if (id == R.id.nav_settings)
+        {
+            Intent intent = new Intent(MainLight.this, MainStartupSettings.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }

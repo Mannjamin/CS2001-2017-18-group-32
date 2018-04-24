@@ -1,13 +1,7 @@
 package group.cs2001.lightr;
 
-import android.Manifest;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -27,7 +21,7 @@ import com.jjoe64.graphview.series.LineGraphSeries;
  * THIS IS A COPY AND PASTE OF THE TEMPERTURE PAGE.
  */
 
-public class MainLightSettings extends AppCompatActivity
+public class MainCalendar extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
@@ -46,22 +40,12 @@ public class MainLightSettings extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        setContentView(R.layout.content_main_temp);
-        GraphView graph = (GraphView) findViewById(R.id.graph);
-        LineGraphSeries<DataPoint> series = new LineGraphSeries<>(new DataPoint[] {
-                new DataPoint(10, 500),
-                new DataPoint(12, 750),
-                new DataPoint(14, 320),
-                new DataPoint(16, 1000),
-                new DataPoint(18, 759)
-        });
-        //graph.addSeries(series);
     }
 
     @Override
     public void onBackPressed() {
         //Log.d("CDA", "onBackPressed Called");
-        Intent intent = new Intent(MainLightSettings.this, MainMenu.class);
+        Intent intent = new Intent(MainCalendar.this, MainMenu.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
@@ -74,43 +58,25 @@ public class MainLightSettings extends AppCompatActivity
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_devices) {
-            Intent intent = new Intent(MainLightSettings.this, MainDevices.class);
+        if (id == R.id.nav_light)
+        {
+            Intent intent = new Intent(MainCalendar.this, MainLight.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        } else if (id == R.id.nav_light) {
-            Intent intent = new Intent(MainLightSettings.this, MainLight.class);
+            startActivity(intent); } else if (id == R.id.nav_temp)
+        {
+            Intent intent = new Intent(MainCalendar.this, MainTemp.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        } else if (id == R.id.nav_temp) {
-            Intent intent = new Intent(MainLightSettings.this, MainTemp.class);
+            startActivity(intent); } else if (id == R.id.nav_sound)
+        {
+            Intent intent = new Intent(MainCalendar.this, MainSound.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        } else if (id == R.id.nav_sound) {
-            Intent intent = new Intent(MainLightSettings.this, MainSound.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        } else if (id == R.id.nav_settings) {
-            Intent intent = new Intent(MainLightSettings.this, MainSettings.class);
+            startActivity(intent); } else if (id == R.id.nav_settings)
+        {
+            Intent intent = new Intent(MainCalendar.this, MainStartupSettings.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }

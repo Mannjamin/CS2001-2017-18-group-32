@@ -49,7 +49,7 @@
             android:label="Global Settings"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".MainLightSettings"
+            android:name=".MainCalendar"
             android:label="Light Settings"
             android:theme="@style/AppTheme.NoActionBar"/>
     </application>

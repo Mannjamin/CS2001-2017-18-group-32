@@ -203,10 +203,7 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_devices) {
-            Intent intent = new Intent(MainSound.this, MainDevices.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent); } else if (id == R.id.nav_light)
+        if (id == R.id.nav_light)
         {
             Intent intent = new Intent(MainSound.this, MainLight.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -220,7 +217,7 @@ public class MainSound extends AppCompatActivity implements NavigationView.OnNav
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent); } else if (id == R.id.nav_settings)
         {
-            Intent intent = new Intent(MainSound.this, MainSettings.class);
+            Intent intent = new Intent(MainSound.this, MainStartupSettings.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
